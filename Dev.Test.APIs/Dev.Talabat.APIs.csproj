@@ -11,4 +11,8 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="10.0.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Dev.Test.Infrastructure.persistence\Dev.Talabat.Infrastructure.persistence.csproj" />
+  </ItemGroup>
+
 </Project>

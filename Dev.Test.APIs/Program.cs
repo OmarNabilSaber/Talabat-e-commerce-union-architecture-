@@ -1,3 +1,7 @@
+using Dev.Talabat.Infrastructure.persistence;
+using Dev.Talabat.Infrastructure.persistence.Data;
+using Microsoft.AspNetCore.Components;
+using Microsoft.EntityFrameworkCore;
 using Swashbuckle.AspNetCore;
 namespace Dev.Talabat.APIs
 {
@@ -5,19 +9,20 @@ namespace Dev.Talabat.APIs
     {
         public static void Main(string[] args)
         {
-            var builder = WebApplication.CreateBuilder(args);
+            var webApplicationBuilder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
 
-            builder.Services.AddControllers();
+            webApplicationBuilder.Services.AddControllers();
+            webApplicationBuilder.Services.AddPresistenceServices(webApplicationBuilder.Configuration);
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-            // builder.Services.AddOpenApi();
+            // webApplicationBuilder.Services.AddOpenApi();
 
             // configure swagger 
-            builder.Services.AddSwaggerGen();
-            builder.Services.AddEndpointsApiExplorer();
+            webApplicationBuilder.Services.AddSwaggerGen();
+            webApplicationBuilder.Services.AddEndpointsApiExplorer();
 
-            var app = builder.Build();
+            var app = webApplicationBuilder.Build();
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
