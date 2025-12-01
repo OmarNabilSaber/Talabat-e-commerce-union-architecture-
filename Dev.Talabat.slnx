@@ -1,0 +1,19 @@
+<Solution>
+  <Folder Name="/src/" />
+  <Folder Name="/src/APIs/">
+    <Project Path="Dev.Test.APIs/Dev.Talabat.APIs.csproj" />
+  </Folder>
+  <Folder Name="/src/Core/">
+    <Project Path="Dev.Test.Application.abstruction/Dev.Talabat.Application.abstruction.csproj" Id="2a78524a-3a41-4897-973c-5d6be053b870" />
+    <Project Path="Dev.Test.Application/Dev.Talabat.Application.csproj" Id="d7a248e0-28f0-4b9e-aacb-8c4c1c29c410" />
+    <Project Path="Dev.test.Domain/Dev.Talabat.Domain.csproj" Id="1fdbffe7-47c2-4d1d-a757-d97c3f942080" />
+  </Folder>
+  <Folder Name="/src/Infrastructure/">
+    <Project Path="Dev.Test.Infrastructure.persistence/Dev.Talabat.Infrastructure.persistence.csproj" Id="050d4cc4-5b19-44c8-9efc-bc9c3cac4459" />
+    <Project Path="Dev.Test.Infrastructure/Dev.Talabat.Infrastructure.csproj" Id="c7154882-b388-4944-a99b-3cdaa30e1015" />
+  </Folder>
+  <Folder Name="/src/UI/" />
+  <Folder Name="/src/UI/Client/" />
+  <Folder Name="/src/UI/Dashboard/" />
+  <Folder Name="/test/" />
+</Solution>
