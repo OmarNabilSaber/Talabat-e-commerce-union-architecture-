@@ -9,8 +9,8 @@ namespace Dev.Talabat.APIs
         {
             var webApplicationBuilder = WebApplication.CreateBuilder(args);
 
+            #region configure services
             // Add services to the container.
-
             webApplicationBuilder.Services.AddControllers();
             webApplicationBuilder.Services.AddPresistenceServices(webApplicationBuilder.Configuration);
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
@@ -21,6 +21,9 @@ namespace Dev.Talabat.APIs
             webApplicationBuilder.Services.AddEndpointsApiExplorer();
 
             var app = webApplicationBuilder.Build();
+            #endregion
+
+            #region Apply Migrations and data seeding
 
             using var scope = app.Services.CreateScope();
             var services = scope.ServiceProvider;
@@ -31,13 +34,17 @@ namespace Dev.Talabat.APIs
                 var pandingMigrations = storeContext.Database.GetPendingMigrations();
                 if (pandingMigrations.Any())
                     await storeContext.Database.MigrateAsync();
+
+                await StoreContextSeed.SeedAsync(storeContext, loggerFactory);
             }
             catch
             {
                 var logger = loggerFactory.CreateLogger<Program>();
-                logger.LogError("An error occurred during applying the migration");
+                logger.LogError("An error occurred during applying the migration Or data seeding");
             }
+            #endregion
 
+            #region configure middlewares
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
@@ -52,6 +59,7 @@ namespace Dev.Talabat.APIs
 
 
             app.MapControllers();
+            #endregion
 
             app.Run();
         }

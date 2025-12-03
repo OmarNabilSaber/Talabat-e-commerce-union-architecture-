@@ -16,8 +16,8 @@ namespace Dev.Talabat.Infrastructure.persistence.Data
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(AssemblyInformation).Assembly);
             base.OnModelCreating(modelBuilder);
         }
-        DbSet<Product> Products { get; set; }
-        DbSet<ProductBrand> ProductBrands { get; set; }
-        DbSet<ProductCategory> ProductCategories { get; set; }
+        public DbSet<Product> Products { get; set; }
+        public DbSet<ProductBrand> ProductBrands { get; set; }
+        public DbSet<ProductCategory> ProductCategories { get; set; }
     }
 }
