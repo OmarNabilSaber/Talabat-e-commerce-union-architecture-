@@ -14,7 +14,7 @@ namespace Dev.Talabat.Infrastructure.persistence.Data
             {
                 try
                 {
-                    string brandsFilePath = "../Dev.Talabat.Infrastructure.persistence/Data/Seed/brands.json";
+                    string brandsFilePath = "../Dev.Talabat.Infrastructure.persistence/Data/Seeds/brands.json";
                     var brandsData = await File.ReadAllTextAsync(brandsFilePath);
                     var brands = JsonSerializer.Deserialize<List<ProductBrand>>(brandsData);
 

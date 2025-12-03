@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Dev.Test.Infrastructure.persistence\Dev.Talabat.Infrastructure.persistence.csproj" />
+    <ProjectReference Include="..\Dev.Talabat.Infrastructure.persistence\Dev.Talabat.Infrastructure.persistence.csproj" />
   </ItemGroup>
 
 </Project>

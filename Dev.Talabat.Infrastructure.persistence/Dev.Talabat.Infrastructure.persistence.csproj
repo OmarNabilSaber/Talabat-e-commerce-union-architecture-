@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Dev.test.Domain\Dev.Talabat.Domain.csproj" />
+    <ProjectReference Include="..\Dev.Talabat.Domain\Dev.Talabat.Domain.csproj" />
   </ItemGroup>
 
 </Project>
