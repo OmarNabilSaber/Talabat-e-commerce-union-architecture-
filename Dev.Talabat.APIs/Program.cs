@@ -1,3 +1,5 @@
+using Dev.Talabat.APIs.Extensions;
+using Dev.Talabat.Domain.Contracts;
 using Dev.Talabat.Infrastructure.persistence;
 using Dev.Talabat.Infrastructure.persistence.Data;
 using Microsoft.EntityFrameworkCore;
@@ -23,25 +25,8 @@ namespace Dev.Talabat.APIs
             var app = webApplicationBuilder.Build();
             #endregion
 
-            #region Apply Migrations and data seeding
-
-            using var scope = app.Services.CreateScope();
-            var services = scope.ServiceProvider;
-            var storeContext = services.GetRequiredService<StoreContext>();
-            var loggerFactory = services.GetRequiredService<ILoggerFactory>();
-            try
-            {
-                var pandingMigrations = storeContext.Database.GetPendingMigrations();
-                if (pandingMigrations.Any())
-                    await storeContext.Database.MigrateAsync();
-
-                await StoreContextSeed.SeedAsync(storeContext, loggerFactory);
-            }
-            catch
-            {
-                var logger = loggerFactory.CreateLogger<Program>();
-                logger.LogError("An error occurred during applying the migration Or data seeding");
-            }
+            #region Databases initialization
+            await app.InitializeStoreContextAsync();
             #endregion
 
             #region configure middlewares

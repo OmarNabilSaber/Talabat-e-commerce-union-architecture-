@@ -1,4 +1,7 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Dev.Talabat.Domain.Contracts;
+using Microsoft.Extensions.Logging;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -6,12 +9,19 @@ using System.Text.Json;
 
 namespace Dev.Talabat.Infrastructure.persistence.Data
 {
-    public static class StoreContextSeed
+    internal class StoreContextInitializer(StoreContext _storeContext, ILoggerFactory loggerFactory) : IStoreContextInitializer
     {
-        public static async Task SeedAsync (StoreContext dbContext, ILoggerFactory loggerFactory)
+        public async Task InitializeAsync()
+        {
+            var pandingMigrations = await _storeContext.Database.GetPendingMigrationsAsync();
+            if (pandingMigrations.Any())
+                await _storeContext.Database.MigrateAsync();
+        }
+
+        public async Task SeedAsync()
         {
             #region seeding Brands data 
-            if (!dbContext.ProductBrands.Any())
+            if (!_storeContext.ProductBrands.Any())
             {
                 try
                 {
@@ -21,8 +31,8 @@ namespace Dev.Talabat.Infrastructure.persistence.Data
 
                     if (brands is not null && brands.Any())
                     {
-                        await dbContext.ProductBrands.AddRangeAsync(brands);
-                        await dbContext.SaveChangesAsync();
+                        await _storeContext.ProductBrands.AddRangeAsync(brands);
+                        await _storeContext.SaveChangesAsync();
                     }
                 }
                 catch (Exception ex)
@@ -35,7 +45,7 @@ namespace Dev.Talabat.Infrastructure.persistence.Data
             #endregion
 
             #region seeding categories data
-            if (!dbContext.ProductCategories.Any())
+            if (!_storeContext.ProductCategories.Any())
             {
                 try
                 {
@@ -44,8 +54,8 @@ namespace Dev.Talabat.Infrastructure.persistence.Data
                     var categories = JsonSerializer.Deserialize<List<ProductCategory>>(categoriesData);
                     if (categories is not null && categories.Any())
                     {
-                        await dbContext.ProductCategories.AddRangeAsync(categories);
-                        await dbContext.SaveChangesAsync();
+                        await _storeContext.ProductCategories.AddRangeAsync(categories);
+                        await _storeContext.SaveChangesAsync();
                     }
                 }
                 catch (Exception ex)
@@ -58,7 +68,7 @@ namespace Dev.Talabat.Infrastructure.persistence.Data
             #endregion
 
             #region seeding products data
-            if (!dbContext.Products.Any())
+            if (!_storeContext.Products.Any())
             {
                 try
                 {
@@ -67,8 +77,8 @@ namespace Dev.Talabat.Infrastructure.persistence.Data
                     var products = JsonSerializer.Deserialize<List<Product>>(productsData);
                     if (products is not null && products.Any())
                     {
-                        await dbContext.Products.AddRangeAsync(products);
-                        await dbContext.SaveChangesAsync();
+                        await _storeContext.Products.AddRangeAsync(products);
+                        await _storeContext.SaveChangesAsync();
                     }
                 }
                 catch (Exception ex)
@@ -77,7 +87,7 @@ namespace Dev.Talabat.Infrastructure.persistence.Data
                     logger.LogError("Error seeding Products: ");
                     logger.LogError(ex.Message);
                 }
-            } 
+            }
             #endregion
         }
     }

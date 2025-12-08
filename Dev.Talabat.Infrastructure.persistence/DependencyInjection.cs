@@ -1,4 +1,5 @@
-﻿using Dev.Talabat.Infrastructure.persistence.Data;
+﻿using Dev.Talabat.Domain.Contracts;
+using Dev.Talabat.Infrastructure.persistence.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -17,6 +18,7 @@ namespace Dev.Talabat.Infrastructure.persistence
                 {
                     optionsBuilder.UseSqlServer(configuration.GetConnectionString("StoreContext"));
                 });
+                services.AddScoped(typeof(IStoreContextInitializer), typeof(StoreContextInitializer));
                 return services;
             }
         }

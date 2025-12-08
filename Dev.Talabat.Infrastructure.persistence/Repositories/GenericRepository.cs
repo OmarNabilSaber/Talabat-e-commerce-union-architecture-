@@ -1,0 +1,32 @@
+﻿using Dev.Talabat.Domain.Common;
+using Dev.Talabat.Domain.Contracts;
+using Dev.Talabat.Infrastructure.persistence.Data;
+using Microsoft.VisualBasic;
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace Dev.Talabat.Infrastructure.persistence.Repositories
+{
+    internal class GenericRepository<TEntity, TKey>(StoreContext _dbcontext) : IGenericRepository<TEntity, TKey>
+        where TEntity : BaseEntity<TKey>
+        where TKey : IEquatable<TKey>
+    {
+        public async Task<IEnumerable<TEntity>> GetAllAsync(bool withTracking = false)
+            => withTracking
+                ? await _dbcontext.Set<TEntity>().ToListAsync()
+                : await _dbcontext.Set<TEntity>().AsNoTracking().ToListAsync();
+
+        public async Task<TEntity?> GetAsync(TKey id)
+            => await _dbcontext.Set<TEntity>().FindAsync(id);
+
+        public async Task AddAsync(TEntity entity)
+            => await _dbcontext.Set<TEntity>().AddAsync(entity);
+        public void Update(TEntity entity)
+            => _dbcontext.Set<TEntity>().Update(entity);
+
+        public void Delete(TEntity entity)
+            => _dbcontext.Set<TEntity>().Remove(entity);
+
+    }
+}
