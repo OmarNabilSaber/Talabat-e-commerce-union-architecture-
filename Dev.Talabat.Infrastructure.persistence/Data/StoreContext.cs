@@ -1,4 +1,6 @@
-﻿using Dev.Talabat.Infrastructure.persistence.Data.Config.Products;
+﻿using Dev.Talabat.Domain.Common;
+using Dev.Talabat.Infrastructure.persistence.Data.Config.Products;
+using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 using Microsoft.Identity.Client;
 using System;
 using System.Collections.Generic;
@@ -16,6 +18,7 @@ namespace Dev.Talabat.Infrastructure.persistence.Data
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(AssemblyInformation).Assembly);
             base.OnModelCreating(modelBuilder);
         }
+
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductBrand> ProductBrands { get; set; }
         public DbSet<ProductCategory> ProductCategories { get; set; }

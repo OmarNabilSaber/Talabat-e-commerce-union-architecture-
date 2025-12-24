@@ -1,5 +1,7 @@
 ﻿using Dev.Talabat.Domain.Contracts;
 using Dev.Talabat.Infrastructure.persistence.Data;
+using Dev.Talabat.Infrastructure.persistence.Data.Interceptors;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -19,6 +21,7 @@ namespace Dev.Talabat.Infrastructure.persistence
                     optionsBuilder.UseSqlServer(configuration.GetConnectionString("StoreContext"));
                 });
                 services.AddScoped(typeof(IStoreContextInitializer), typeof(StoreContextInitializer));
+                services.AddScoped(typeof(ISaveChangesInterceptor), typeof(CustomSaveChangesInterceptor));
                 return services;
             }
         }

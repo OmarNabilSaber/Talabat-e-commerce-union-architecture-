@@ -9,7 +9,7 @@ using System.Text;
 namespace Dev.Talabat.Infrastructure.persistence.Repositories
 {
     internal class GenericRepository<TEntity, TKey>(StoreContext _dbcontext) : IGenericRepository<TEntity, TKey>
-        where TEntity : BaseEntity<TKey>
+        where TEntity : BaseAuditableEntity<TKey>
         where TKey : IEquatable<TKey>
     {
         public async Task<IEnumerable<TEntity>> GetAllAsync(bool withTracking = false)

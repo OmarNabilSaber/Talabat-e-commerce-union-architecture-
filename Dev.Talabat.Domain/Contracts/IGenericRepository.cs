@@ -5,7 +5,7 @@ using System.Text;
 namespace Dev.Talabat.Domain.Contracts
 {
     public interface IGenericRepository<TEntity, TKey> 
-        where TEntity : BaseEntity<TKey>
+        where TEntity : BaseAuditableEntity<TKey>
         where TKey : IEquatable<TKey>
     {
         public Task<IEnumerable<TEntity>> GetAllAsync(bool withTracking = false);

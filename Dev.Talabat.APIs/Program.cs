@@ -1,4 +1,6 @@
 using Dev.Talabat.APIs.Extensions;
+using Dev.Talabat.APIs.Services;
+using Dev.Talabat.Application.abstruction;
 using Dev.Talabat.Domain.Contracts;
 using Dev.Talabat.Infrastructure.persistence;
 using Dev.Talabat.Infrastructure.persistence.Data;
@@ -14,7 +16,11 @@ namespace Dev.Talabat.APIs
             #region configure services
             // Add services to the container.
             webApplicationBuilder.Services.AddControllers();
+            webApplicationBuilder.Services.AddHttpContextAccessor();
+            webApplicationBuilder.Services.AddScoped(typeof(ILoggedInUserService), typeof(LoggedInUserService));
             webApplicationBuilder.Services.AddPresistenceServices(webApplicationBuilder.Configuration);
+            
+            
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             // webApplicationBuilder.Services.AddOpenApi();
 
